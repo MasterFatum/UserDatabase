@@ -10,9 +10,11 @@ class Base(DeclarativeBase):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    username = Column(String)
-    password = Column(String)
-    email = Column(String)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
+
+Base.metadata.create_all(engine)
 
