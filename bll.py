@@ -9,7 +9,7 @@ class Base(DeclarativeBase):
 
 Session = sessionmaker(bind=engine)
 
-with Session() as session:
+with Session() as db:
     pass
 
 class User(Base):
@@ -30,32 +30,47 @@ class User(Base):
 
 def add_user(user):
     user = User()
-    session.add(user)
-    session.commit()
+    db.add(user)
+    db.commit()
+    db.refresh(user)
     print(f'Added user: {user.email}')
 
 
 def remove_user_by_id(id):
-    user = session.query(User).get(id)
+    user = db.query(User).get(id)
     if user:
-        session.delete(user)
-        session.commit()
+        db.delete(user)
+        db.commit()
+        db.refresh(user)
         print(f'Removed user: {user.email}')
 
 
 def remove_user_by_email(email):
-    user = session.query(User).filter_by(email=email).first()
+    user = db.query(User).filter_by(email=email).first()
     if user:
-        session.delete(user)
-        session.commit()
+        db.delete(user)
+        db.commit()
+        db.refresh(user)
         print(f'Removed user: {email}')
 
 
 def view_all_users():
-    for user in session.query(User).all():
+    for user in db.query(User).all():
         print(f'First name: {user.first_name}\nL'
               f'ast name: {user.last_name}\n'
               f'Username: {user.username}\n'
               f'Email: {user.email}\n'
               f'Password: {user.password}\n'
               + f'{"=" * 30}')
+
+
+def find_user_by_email(email):
+    user = db.query(User).filter_by(email=email).first()
+    if user:
+        print(f'First name: {user.first_name}\nL')
+
+
+def find_user_by_username(username):
+    user = db.query(User).filter_by(username=username).first()
+    if user:
+        print(f'First name: {user.first_name}\nL')
