@@ -8,9 +8,8 @@ if __name__ == '__main__':
           f'3. Remove user by ID\n'
           f'4. Remove user by E-mail\n'
           f'5. View all users\n'
-          f'6. Find user by ID\n'
-          f'7. Find user by E-mail\n'
-          f'8. Exit')
+          f'6. Find user by username\n'
+          f'7. Exit')
 while True:
     action = int(input('Action: '))
 
@@ -62,10 +61,10 @@ while True:
         case 5:
             view_all_users()
         case 6:
-            pass
+            username = input('Username: ')
+            if username:
+                find_user_by_username(username)
         case 7:
-            pass
-        case 8:
             exit()
 
 

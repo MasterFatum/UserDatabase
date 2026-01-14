@@ -56,10 +56,7 @@ def edit_user_by_id(id, **kwargs):
                 else:
                     print('This email is already taken')
             db.commit()
-
-
-
-
+            print(f'Updated user: {user.email}')
 
 
 def remove_user_by_id(id):
@@ -90,16 +87,17 @@ def view_all_users():
               + f'{"=" * 30}')
 
 
-def find_user_by_email(email):
-    user = db.query(User).filter_by(email=email).first()
-    if user:
-        print(f'First name: {user.first_name}\nL')
-
-
 def find_user_by_username(username):
     user = db.query(User).filter_by(username=username).first()
     if user:
-        print(f'First name: {user.first_name}\nL')
+        print(
+            f'Id: {user.id}\n'
+            f'First name: {user.first_name}\nL'
+            f'Last name: {user.last_name}\n'
+            f'Username: {user.username}\n'
+            f'Email: {user.email}\n'
+            f'Password: {user.password}\n'
+            + f'{"=" * 30}')
 
 
 def get_all_usernames(username):
