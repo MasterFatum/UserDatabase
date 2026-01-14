@@ -29,11 +29,37 @@ class User(Base):
 
 
 def add_user(user):
-    user = User()
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    print(f'Added user: {user.email}')
+    try:
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        print(f'Added user: {user.email}')
+    except Exception as e:
+        print(e)
+
+
+def edit_user_by_id(id, **kwargs):
+    if kwargs:
+        user = db.query(User).get(id)
+        if user:
+            if kwargs.get('first_name'):
+                user.first_name = kwargs.get('first_name', user.first_name)
+            if kwargs.get('last_name'):
+                user.last_name = kwargs.get('last_name', user.last_name)
+            if kwargs.get('username'):
+                user.username = kwargs.get('username', user.username)
+            if kwargs.get('password'):
+                user.password = kwargs.get('password', user.password)
+            if kwargs.get('email'):
+                if not get_all_usernames(kwargs.get('email')):
+                    user.email = kwargs.get('email', user.email)
+                else:
+                    print('This email is already taken')
+            db.commit()
+
+
+
+
 
 
 def remove_user_by_id(id):
@@ -41,7 +67,6 @@ def remove_user_by_id(id):
     if user:
         db.delete(user)
         db.commit()
-        db.refresh(user)
         print(f'Removed user: {user.email}')
 
 
@@ -50,14 +75,15 @@ def remove_user_by_email(email):
     if user:
         db.delete(user)
         db.commit()
-        db.refresh(user)
         print(f'Removed user: {email}')
 
 
 def view_all_users():
     for user in db.query(User).all():
-        print(f'First name: {user.first_name}\nL'
-              f'ast name: {user.last_name}\n'
+        print(
+              f'Id: {user.id}\n'
+              f'First name: {user.first_name}\nL'
+              f'Last name: {user.last_name}\n'
               f'Username: {user.username}\n'
               f'Email: {user.email}\n'
               f'Password: {user.password}\n'
@@ -74,3 +100,10 @@ def find_user_by_username(username):
     user = db.query(User).filter_by(username=username).first()
     if user:
         print(f'First name: {user.first_name}\nL')
+
+
+def get_all_usernames(username):
+    usernames = db.query(User).filter_by(username=username).first()
+    if usernames:
+        return True
+    return False
