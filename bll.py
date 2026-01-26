@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, select, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 
-engine = create_engine('sqlite:///users.db', echo=True)
+engine = create_engine('sqlite:///users.db')
 
 class Base(DeclarativeBase):
     pass
@@ -105,3 +105,17 @@ def get_all_usernames(username):
     if usernames:
         return True
     return False
+
+
+def authorize(username, password):
+    user = db.query(User).filter_by(username=username).first()
+    if user:
+        if user.password == password:
+            print(f'Welcome, {user.first_name} {user.last_name}!')
+            return True
+        else:
+            print('Incorrect password.')
+            return False
+    else:
+        print('User not found.')
+        return False
