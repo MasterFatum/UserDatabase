@@ -1,6 +1,5 @@
-from sqlalchemy import create_engine, select, Column, Integer, String
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-
+from sqlalchemy import create_engine, select, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, relationship
 
 engine = create_engine('sqlite:///users.db')
 
@@ -20,13 +19,38 @@ class User(Base):
     username = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
+    year_work = Column(Integer)
+    company_id = Column(Integer, ForeignKey('companies.id'))
+    company = relationship("Company", back_populates="users")
+
+
+class Company(Base):
+    __tablename__ = 'companies'
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    users = relationship("User", back_populates="company")
 
 # Base.metadata.create_all(engine)
 
-# root = User(first_name='Panfilov', last_name='Ivan', username='root', email='root@root.ru', password='Doberman777')
-# session.add(root)
-# session.commit()
 
+# tom = User(first_name='Tom', last_name='Smith', username='tom', email='tom@tom.com', password='123456', year_work=2026, company_id=1)
+# db.add(tom)
+# db.commit()
+
+def get_company():
+    for company in db.query(Company).all():
+        print(
+            f'Id: {company.id}\n'
+            f'Company name: {company.name}\n'
+            + f'{"=" * 30}')
+
+def add_company(company):
+    try:
+        company_name = Company(name=company)
+        db.add(company_name)
+        print(f'Added company: {company}')
+    except Exception as e:
+        print(e)
 
 def add_user(user):
     try:
@@ -84,6 +108,7 @@ def view_all_users():
               f'Username: {user.username}\n'
               f'Email: {user.email}\n'
               f'Password: {user.password}\n'
+              f'Year work: {user.year_work}\n'
               + f'{"=" * 30}')
 
 

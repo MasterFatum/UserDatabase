@@ -11,7 +11,9 @@ if __name__ == '__main__':
               f'5. View all users\n'
               f'6. Find user by username\n'
               f'7. Authorize user\n'
-              f'8. Exit')
+              f'8. Add company name\n'
+              f'9. Get company name\n'
+              f'10. Exit')
 
         action = int(input('Action: '))
 
@@ -21,9 +23,12 @@ if __name__ == '__main__':
                 first_name = input('First name: ')
                 last_name = input('Last name: ')
                 email = input('E-mail: ')
+                year = int(input('Year: '))
                 username = input('Username: ')
                 password = input('Password: ')
-                user = User(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+                get_company()
+                company_name_id = int(input('Enter company ID: '))
+                user = User(first_name=first_name, last_name=last_name, email=email, year_work=year, username=username, password=password, company_id=company_name_id)
                 add_user(user)
             case 2:
                 user_id = int(input('User ID: '))
@@ -71,6 +76,12 @@ if __name__ == '__main__':
                 password = input('Password: ')
                 authorize(username, password)
             case 8:
+                company_name = input('Company name: ')
+                if company_name:
+                    add_company(company_name)
+            case 9:
+                get_company()
+            case 10:
                 exit()
 
 
