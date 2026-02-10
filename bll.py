@@ -38,16 +38,21 @@ class Company(Base):
 # db.commit()
 
 def get_company():
-    for company in db.query(Company).all():
-        print(
+    companies = db.query(Company).all()
+    if companies:
+        for company in companies:
+            print(
             f'Id: {company.id}\n'
             f'Company name: {company.name}\n'
             + f'{"=" * 30}')
+    else:
+        print('No companies')
 
 def add_company(company):
     try:
         company_name = Company(name=company)
         db.add(company_name)
+        db.commit()
         print(f'Added company: {company}')
     except Exception as e:
         print(e)
@@ -100,7 +105,8 @@ def remove_user_by_email(email):
 
 
 def view_all_users():
-    for user in db.query(User).all():
+    users = db.query(User).all()
+    for user in users:
         print(
               f'Id: {user.id}\n'
               f'First name: {user.first_name}\nL'
@@ -108,6 +114,7 @@ def view_all_users():
               f'Username: {user.username}\n'
               f'Email: {user.email}\n'
               f'Password: {user.password}\n'
+              f'Company: {user.company.name}\n'
               f'Year work: {user.year_work}\n'
               + f'{"=" * 30}')
 
