@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, select, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, relationship
+import os
 
 engine = create_engine('sqlite:///users.db')
 
@@ -37,6 +38,10 @@ class Company(Base):
 # db.add(tom)
 # db.commit()
 
+# def clear_console():
+#     os.system('cls' if os.name == 'nt' else 'clear')
+# clear_console()
+
 def get_company():
     companies = db.query(Company).all()
     if companies:
@@ -48,6 +53,7 @@ def get_company():
     else:
         print('No companies')
 
+
 def add_company(company):
     try:
         company_name = Company(name=company)
@@ -56,6 +62,16 @@ def add_company(company):
         print(f'Added company: {company}')
     except Exception as e:
         print(e)
+
+
+def remove_company(id):
+    company = db.query(Company).get(id)
+    if company:
+        db.delete(company)
+        db.commit()
+        print(f'Removed company: {company.name}')
+
+
 
 def add_user(user):
     try:
@@ -151,3 +167,4 @@ def authorize(username, password):
     else:
         print('User not found.')
         return False
+
