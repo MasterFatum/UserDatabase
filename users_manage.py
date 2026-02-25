@@ -22,7 +22,7 @@ def user_manage():
                 year = int(input('Year: '))
                 username = input('Username: ')
                 password = input('Password: ')
-                get_company()
+                get_companies()
                 company_name_id = int(input('Enter company ID: '))
                 user = User(first_name=first_name, last_name=last_name, email=email, year_work=year, username=username, password=password, company_id=company_name_id)
                 add_user(user)
@@ -78,6 +78,6 @@ def user_manage():
                 if company_name:
                     add_company(company_name)
             case 9:
-                get_company()
+                get_companies()
             case 10:
                 exit()

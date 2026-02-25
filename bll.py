@@ -42,7 +42,7 @@ class Company(Base):
 #     os.system('cls' if os.name == 'nt' else 'clear')
 # clear_console()
 
-def get_company():
+def get_companies():
     companies = db.query(Company).all()
     if companies:
         for company in companies:

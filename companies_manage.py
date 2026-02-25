@@ -15,6 +15,8 @@ def company_manage():
                 company_name = input('Company name: ')
                 add_company(company_name)
             case 2:
-                remove_company()
+                get_companies()
+                company_id = int(input('Company id: '))
+                remove_company(company_id)
             case 3:
-                get_company()
+                get_companies()
