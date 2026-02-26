@@ -7,6 +7,7 @@ def company_manage():
               f'\n1. Add company\n'
               f'2. Remove company\n'
               f'3. View company\n'
+              f'4. View all users in company\n'
               )
 
         action = int(input('Action: '))
@@ -20,3 +21,11 @@ def company_manage():
                 remove_company(company_id)
             case 3:
                 get_companies()
+            case 4:
+                company_id = int(input('Company id: '))
+                if company_id:
+                    get_users_by_company(company_id)
+            case 5:
+                exit()
+            case _:
+                print('Wrong action!')

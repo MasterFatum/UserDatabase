@@ -168,3 +168,31 @@ def authorize(username, password):
         print('User not found.')
         return False
 
+
+# ... существующий код ...
+
+def get_users_by_company(company_id):
+    """
+    Выводит всех пользователей, которые работают в компании с указанным company_id.
+    """
+    company = db.query(Company).get(company_id)
+    if company:
+        users = db.query(User).filter_by(company_id=company.id).all()
+        if users:
+            print(f"Users working in '{company.name}':")
+            for user in users:
+                print(
+                    f'Id: {user.id}\n'
+                    f'Company: {company.name}\n'
+                    f'First name: {user.first_name}\n'
+                    f'Last name: {user.last_name}\n'
+                    f'Username: {user.username}\n'
+                    f'Email: {user.email}\n'
+                    f'Year work: {user.year_work}\n'
+                    + f'{"=" * 30}')
+        else:
+            print(f'No users found in company: {company.name}')
+    else:
+        print('Company not found.')
+
+# ... остальной код ...

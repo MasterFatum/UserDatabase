@@ -15,7 +15,7 @@ if __name__ == '__main__':
             # clear_console()
             company_manage()
         case _:
-            print('Invalid action')
+            print('Wrong action')
 
 
 

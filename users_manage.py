@@ -27,6 +27,7 @@ def user_manage():
                 user = User(first_name=first_name, last_name=last_name, email=email, year_work=year, username=username, password=password, company_id=company_name_id)
                 add_user(user)
             case 2:
+                view_all_users()
                 user_id = int(input('User ID: '))
                 if user_id:
                     first_name = input('First name: ')
@@ -74,10 +75,4 @@ def user_manage():
                 password = input('Password: ')
                 authorize(username, password)
             case 8:
-                company_name = input('Company name: ')
-                if company_name:
-                    add_company(company_name)
-            case 9:
-                get_companies()
-            case 10:
                 exit()
