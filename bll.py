@@ -169,12 +169,7 @@ def authorize(username, password):
         return False
 
 
-# ... существующий код ...
-
 def get_users_by_company(company_id):
-    """
-    Выводит всех пользователей, которые работают в компании с указанным company_id.
-    """
     company = db.query(Company).get(company_id)
     if company:
         users = db.query(User).filter_by(company_id=company.id).all()
@@ -195,4 +190,8 @@ def get_users_by_company(company_id):
     else:
         print('Company not found.')
 
-# ... остальной код ...
+def find_email(email):
+    exist_email = db.query(User).filter_by(email=email).first()
+    if exist_email:
+        return True
+    return False
