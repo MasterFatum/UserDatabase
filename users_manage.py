@@ -19,6 +19,10 @@ def user_manage():
                 first_name = input('First name: ')
                 last_name = input('Last name: ')
                 email = input('E-mail: ')
+                if email:
+                    if check_email(email):
+                        print('Invalid email')
+                        continue
                 year = int(input('Year: '))
                 username = input('Username: ')
                 password = input('Password: ')

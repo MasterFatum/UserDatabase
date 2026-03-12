@@ -22,6 +22,7 @@ def company_manage():
             case 3:
                 get_companies()
             case 4:
+                get_companies()
                 company_id = int(input('Company id: '))
                 if company_id:
                     get_users_by_company(company_id)

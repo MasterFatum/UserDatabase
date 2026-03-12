@@ -49,6 +49,7 @@ def get_companies():
             print(
             f'Id: {company.id}\n'
             f'Company name: {company.name}\n'
+            f'Quantity users: {len(company.users)}\n'
             + f'{"=" * 30}')
     else:
         print('No companies')
@@ -174,7 +175,7 @@ def get_users_by_company(company_id):
     if company:
         users = db.query(User).filter_by(company_id=company.id).all()
         if users:
-            print(f"Users working in '{company.name}':")
+            print(f"\nUsers working in '{company.name}': \n")
             for user in users:
                 print(
                     f'Id: {user.id}\n'
@@ -190,7 +191,7 @@ def get_users_by_company(company_id):
     else:
         print('Company not found.')
 
-def find_email(email):
+def check_email(email):
     exist_email = db.query(User).filter_by(email=email).first()
     if exist_email:
         return True
