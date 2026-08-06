@@ -24,7 +24,6 @@ class User(Base):
     company_id = Column(Integer, ForeignKey('companies.id'))
     company = relationship("Company", back_populates="users")
 
-
 class Company(Base):
     __tablename__ = 'companies'
     id = Column(Integer, primary_key=True)
@@ -37,6 +36,7 @@ class Company(Base):
 # tom = User(first_name='Tom', last_name='Smith', username='tom', email='tom@tom.com', password='123456', year_work=2026, company_id=1)
 # db.add(tom)
 # db.commit()
+
 
 # def clear_console():
 #     os.system('cls' if os.name == 'nt' else 'clear')

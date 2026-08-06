@@ -8,6 +8,7 @@ def company_manage():
               f'2. Remove company\n'
               f'3. View company\n'
               f'4. View all users in company\n'
+              f'5. Exit\n'
               )
 
         action = int(input('Action: '))
