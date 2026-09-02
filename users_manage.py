@@ -80,3 +80,5 @@ def user_manage():
                 authorize(username, password)
             case 8:
                 exit()
+            case _:
+                print('Invalid action')

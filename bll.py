@@ -2,6 +2,9 @@ from sqlalchemy import create_engine, select, Column, Integer, String, ForeignKe
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, relationship
 import os
 
+class ExceptionPrint(Exception):
+    """Класс исключения при отправке данных на печать."""
+
 engine = create_engine('sqlite:///users.db')
 
 class Base(DeclarativeBase):
@@ -196,3 +199,30 @@ def check_email(email):
     if exist_email:
         return True
     return False
+
+def get_users_emails_by_company(company_id):
+    user_emails = []
+    if company_id:
+        company = db.query(Company).get(company_id)
+        if company:
+            users = db.query(User).filter_by(company_id=company.id).all()
+            for user in users:
+                user_emails.append(user.email)
+            return user_emails
+
+
+
+class PrintData:
+    def print(self, data):
+        self.send_data(data)
+        print(f"Печать: {data}")
+
+    def send_data(self, data):
+        if not self.send_to_print(data):
+            raise ExceptionPrint("Ошибка печати")
+
+    def send_to_print(self, data):
+        return True
+
+
+

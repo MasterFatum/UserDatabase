@@ -8,7 +8,8 @@ def company_manage():
               f'2. Remove company\n'
               f'3. View company\n'
               f'4. View all users in company\n'
-              f'5. Exit\n'
+              f'5. Print emails of all users in company\n'
+              f'6. Exit\n'
               )
 
         action = int(input('Action: '))
@@ -28,6 +29,14 @@ def company_manage():
                 if company_id:
                     get_users_by_company(company_id)
             case 5:
+                get_companies()
+                company_id = int(input('Company id: '))
+                if company_id:
+                    list_emails = get_users_emails_by_company(company_id)
+                    if list_emails:
+                        p = PrintData()
+                        p.print(list_emails)
+            case 6:
                 exit()
             case _:
-                print('Wrong action!')
+                print('Invalid action')
