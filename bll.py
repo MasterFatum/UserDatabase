@@ -3,7 +3,10 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase, relationship
 import os
 
 class ExceptionPrint(Exception):
-    """Класс исключения при отправке данных на печать."""
+    """Общий пользовательский класс исключения печати."""
+
+class ExceptionPrintError(ExceptionPrint):
+    """Специальный пользовательский класс исключения при отправке данных на печать."""
 
 engine = create_engine('sqlite:///users.db')
 
@@ -194,11 +197,13 @@ def get_users_by_company(company_id):
     else:
         print('Company not found.')
 
+
 def check_email(email):
     exist_email = db.query(User).filter_by(email=email).first()
     if exist_email:
         return True
     return False
+
 
 def get_users_emails_by_company(company_id):
     user_emails = []
@@ -211,18 +216,38 @@ def get_users_emails_by_company(company_id):
             return user_emails
 
 
-
+#Пользовательские исключения печати
 class PrintData:
     def print(self, data):
         self.send_data(data)
         print(f"Печать: {data}")
 
     def send_data(self, data):
+        if not data:
+            raise ExceptionPrint("Нет данных для печати")
         if not self.send_to_print(data):
-            raise ExceptionPrint("Ошибка печати")
+            raise ExceptionPrintError("Ошибка печати")
 
     def send_to_print(self, data):
         return True
 
-
-
+"""Сохранение пользователей в файл"""
+def save_all_users_to_file():
+    if not os.path.exists('users.txt'):
+        try:
+            with open('users.txt', 'w') as file:
+                for user in db.query(User).all():
+                    file.write(f'{user.first_name} {user.last_name} {user.username} {user.email} {user.password}\n')
+                    file.write("=" * 50 + "\n")
+                print('Saved!')
+        except Exception as e:
+            print(e)
+    else:
+        try:
+            with open('users.txt', 'w') as file:
+                for user in db.query(User).all():
+                    file.write(f'{user.first_name} {user.last_name} {user.username} {user.email} {user.password}\n')
+                    file.write("=" * 50 + "\n")
+                print('Saved!')
+        except Exception as e:
+            print(e)

@@ -34,8 +34,11 @@ def company_manage():
                 if company_id:
                     list_emails = get_users_emails_by_company(company_id)
                     if list_emails:
-                        p = PrintData()
-                        p.print(list_emails)
+                        try:
+                            p = PrintData()
+                            p.print(list_emails)
+                        except ExceptionPrint: #Пользовательское исключение ошибки печати
+                            print('Print error')
             case 6:
                 exit()
             case _:

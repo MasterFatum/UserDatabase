@@ -10,7 +10,8 @@ def user_manage():
               f'5. View all users\n'
               f'6. Find user by username\n'
               f'7. Authorize user\n'
-              f'8. Exit \n')
+              f'8. Save all users to file\n'
+              f'9. Exit \n')
 
         action = int(input('Action: '))
 
@@ -79,6 +80,8 @@ def user_manage():
                 password = input('Password: ')
                 authorize(username, password)
             case 8:
+                save_all_users_to_file()
+            case 9:
                 exit()
             case _:
                 print('Invalid action')
